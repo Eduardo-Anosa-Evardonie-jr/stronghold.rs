@@ -28,6 +28,7 @@ mod utils;
 pub use crate::{
     internals::Provider,
     utils::{ClientId, VaultId},
+    interface::Stronghold
 };
 
 pub use engine::vault::{RecordHint, RecordId};
