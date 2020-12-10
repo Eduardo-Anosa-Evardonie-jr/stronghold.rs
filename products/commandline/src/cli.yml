@@ -1,9 +1,9 @@
 name: Stronghold CLI
 version: '1.0'
-author: Elena Frank <elena.frank@iota.org>
+author: Tensor Programming <tensordeveloper@gmail.com>
 about: Interacts with the stronghold interface, read and write data from / to vaults.
 subcommands:
-  - encrypt:
+    - encrypt:
       args:
         - plain:
             short: p
@@ -19,29 +19,45 @@ subcommands:
             about: the password you want to use to encrypt/decrypt the snapshot.
             required: true
             takes_value: true
-        - vault:
-            short: v
-            long: vault
-            value_name: vault
-            about: the vault where the value should be stored in.
+  - snapshot:
+      about: load from an existing snapshot
+      args:
+        - path:
+            short: p
+            long: path
+            value_name: snapshot path
             required: true
             takes_value: true
-        - hint:
-            short: h
-            long: hint
-            value_name: hint
-            about: a hint on what's stored
-            required: false
+        - password:
+            short: w
+            long: pass
+            about: the password for the snapshot you want to load.
+            required: true
             takes_value: true
-
-  - read:
-      about: read data from a vault
+  - list:
+      about: Lists the ids of the records inside of your main snapshot
       args:
         - password:
             short: w
             long: pass
             value_name: password
-            about: the password for the associated snapshot.
+            about: the password for the snapshot.
+            required: true
+            takes_value: true
+        - all:
+            short: A
+            long: all
+            value_name: all
+            about: include revoked records
+            takes_value: false
+  - read:
+      about: read an associated record by id
+      args:
+        - password:
+            short: w
+            long: pass
+            value_name: password
+            about: the password for the snapshot.
             required: true
             takes_value: true
         - id:
@@ -51,10 +67,47 @@ subcommands:
             about: the id of the record you want to read.
             required: true
             takes_value: true
-        - vault:
-            short: v
-            long: vault
-            value_name: vault
-            about: the vault where the value is stored in.
+  - revoke:
+      about: Revoke a record by id
+      args:
+        - password:
+            short: w
+            long: pass
+            value_name: password
+            about: the password for the snapshot.
+            required: true
+            takes_value: true
+        - id:
+            short: i
+            long: id
+            value_name: id
+            about: the id of the entry
+            required: true
+            takes_value: true
+  - garbage_collect:
+      about: Garbage collect the entire vault and remove revoked records.
+      args:
+        - password:
+            short: w
+            long: pass
+            value_name: password
+            about: the password for the snapshot.
+            required: true
+            takes_value: true
+  - purge:
+      about: Revoke a record by id and perform a gargbage collect
+      args:
+        - password:
+            short: w
+            long: pass
+            value_name: password
+            about: the password for the snapshot.
+            required: true
+            takes_value: true
+        - id:
+            short: i
+            long: id
+            value_name: id
+            about: the id of the entry
             required: true
             takes_value: true
